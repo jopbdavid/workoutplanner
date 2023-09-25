@@ -13,18 +13,19 @@ const Hero = () => {
     <div className=" grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
       <div>
         <h1 className="max-w-2xl text-4xl font-bold tracking-tight  sm:text-6xl ">
-          We’re changing the way people shop.
+          Supercharge Your Fitness Journey with Our Workout Planner
         </h1>
 
         <p className="mt-8 max-w-xl text-lg leading-8">
-          Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem
-          cupidatat commodo. Elit sunt amet fugiat veniam occaecat fugiat
-          aliqua. Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure
-          qui lorem cupidatat commodo.
+          Welcome to the ultimate destination for achieving your fitness goals!
+          Whether you're a seasoned gym-goer looking to optimize your routine or
+          a newbie eager to kickstart your fitness journey, ironCycles is here
+          to empower you. Get ready to transform your body, boost your
+          confidence, and unleash your full potential.
         </p>
         <div className="mt-10 ">
-          <Link to="products" className="btn btn-primary ">
-            Our Products
+          <Link to="Planner" className="btn btn-primary ">
+            Our Planner
           </Link>
         </div>
       </div>

@@ -16,7 +16,7 @@ const Header = () => {
             </button>
           </div>
         ) : (
-          <div className="flex gap-x-6 justify-center items-center">
+          <div className="flex gap-x-10 justify-center items-center mr-10">
             <Link to="/login" className="link link-hover text-xs sm:text-sm">
               Sign in / Guest
             </Link>

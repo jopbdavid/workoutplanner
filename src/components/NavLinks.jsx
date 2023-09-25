@@ -30,7 +30,7 @@ const NavLinks = () => {
         // if ((url === "checkout" || url === "orders") && !user) return null;
         return (
           <li key={id}>
-            <NavLink className="capitalize px-20" to={url}>
+            <NavLink className="capitalize px-16 mx-8" to={url}>
               {icon}
             </NavLink>
           </li>
