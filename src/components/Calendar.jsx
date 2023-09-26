@@ -6,6 +6,9 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import CalendarModal from "./CalendarModal";
 import CalendarPop from "./CalendarPop";
+import { toast } from "react-toastify";
+import CalendarModalAlt from "./CalendarModalAlt";
+import Sidebar from "./Sidebar";
 
 const initialState = [
   { title: "Chest", start: "2023-09-18" },
@@ -28,26 +31,29 @@ const formatEvents = (events) => {
 const Calendar = () => {
   const [events, setEvents] = useState(initialState);
   const [modal, setModal] = useState(false);
+  const [eventTitle, setEventTitle] = useState("");
 
   const handlePop = () => {
     setModal(!modal);
   };
 
   const handleSelect = (eventInfo) => {
-    setModal(!modal);
-    const eventNamePrompt = prompt("Enter event name:");
-    if (!eventNamePrompt) {
-      alert("Please provide a valid event name");
+    setModal(true);
+    if (!eventTitle) {
+      toast.error("Please provide a valid event title.");
       return;
     }
+    setModal(!modal);
     setEvents([
       ...events,
       {
-        title: eventNamePrompt,
+        title: eventTitle,
         start: eventInfo.startStr,
       },
     ]);
+    setEventTitle("");
   };
+
   const handleEdit = (eventInfo) => {
     const date = eventInfo.event.extendedProps.start;
 
@@ -83,42 +89,56 @@ const Calendar = () => {
   useEffect(() => {
     console.log(events);
   }, [events]);
+
   return (
-    <div>
+    <div className="-mt-10">
       <div className="flex flex-wrap gap-2 sm:gap-x-6 items-center justify-center">
         <h1 className="max-w-2xl text-4xl font-bold tracking-tight  sm:text-6xl ">
-          Workout Planner
+          IRON CYCLES
         </h1>
       </div>
-      <hr className="w-12 h-8 mx-auto my-8 bg-gray-600 border-4 rounded md:my-12 dark:bg-gray-900" />
-      <div className="flex flex-wrap gap-2 sm:gap-x-6 items-center justify-center pb-10">
-        <CalendarModal />
-        {modal ? <CalendarPop handlePop={handlePop} /> : null}
-      </div>
+      <hr className="w-24 h-6 mx-auto mt-4 mb-20 bg-gray-600 border-4 rounded  dark:bg-gray-900" />
+      <div className="flex flex-wrap gap-2 sm:gap-x-6 items-center justify-center pb-8">
+        {modal ? (
+          <CalendarModalAlt setEventTitle={setEventTitle} isOpen={modal} />
+        ) : null}
 
-      <FullCalendar
-        plugins={[
-          dayGridPlugin,
-          momentPlugin,
-          timeGridPlugin,
-          interactionPlugin,
-        ]}
-        initialView="dayGridMonth"
-        editable={true}
-        eventClick={handleEdit}
-        eventDrop={handleDrop}
-        selectable={true}
-        select={handleSelect}
-        weekends={true}
-        events={formatEvents(events)}
-        eventContent={renderEventContent}
-        headerToolbar={{
-          left: "prev,next,today",
-          center: "title",
-          right: "dayGridYear,dayGridMonth,dayGridWeek,dayGridDay",
-        }}
-        firstDay={1}
-      />
+        {/* {modal ? <CalendarPop handlePop={handlePop} /> : null} */}
+      </div>
+      <div className="flex flex-row w-full h-full">
+        <div className="flex w-2/12 flex-wrap p-4 mr-12 bg-neutral rounded-xl">
+          <Sidebar />
+        </div>
+        <div className="flex-auto w-10/12 ">
+          <FullCalendar
+            plugins={[
+              dayGridPlugin,
+              momentPlugin,
+              timeGridPlugin,
+              interactionPlugin,
+            ]}
+            initialView="dayGridMonth"
+            editable={true}
+            eventClick={handleEdit}
+            eventDrop={handleDrop}
+            selectable={true}
+            select={handleSelect}
+            weekends={true}
+            events={formatEvents(events)}
+            eventBackgroundColor="lightGrey"
+            eventBorderColor="white"
+            eventTextColor="black"
+            eventDisplay="auto"
+            eventContent={renderEventContent}
+            headerToolbar={{
+              left: "prev,next,today",
+              center: "title",
+              right: "dayGridYear,dayGridMonth,dayGridWeek,dayGridDay",
+            }}
+            firstDay={1}
+          />
+        </div>
+      </div>
     </div>
   );
 };
@@ -127,7 +147,9 @@ const Calendar = () => {
 function renderEventContent(eventInfo) {
   return (
     <>
-      <b>{eventInfo.event.title}</b>
+      <div className="text-center font-medium  hover:bg-yellow-300 hover:underline">
+        {eventInfo.event.title}
+      </div>
 
       {/* <b>{eventInfo.timeText}</b> */}
 
